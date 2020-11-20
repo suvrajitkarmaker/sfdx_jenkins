@@ -72,7 +72,7 @@ def salesforceDeploy() {
     }
     def DEPLOYDIR="/var/lib/jenkins/workspace/new_pipeline_${deployBranchURL}/github-checkout/force-app/main/default"
     echo DEPLOYDIR
-    def SF_INSTANCE_URL = "https://login.salesforce.com"
+    def SF_INSTANCE_URL = "https://suvrajit-karmaker-dev-ed.my.salesforce.com/"
 
     dir("${DEPLOYDIR}") {
         if ("${currentBuild.buildCauses}".contains("UserIdCause")) {
