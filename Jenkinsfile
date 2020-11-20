@@ -45,7 +45,7 @@ node {
 	echo wk1
 
 	def TEST_LEVEL='RunLocalTests'
-	def SF_INSTANCE_URL=env.SF_INSTANCE_URL ?: "https://login.salesforce.com"
+	def SF_INSTANCE_URL=env.SF_INSTANCE_URL ?: "https://suvrajit-karmaker-dev-ed.my.salesforce.com/"
 	echo SF_INSTANCE_URL
 
 	def toolbelt = tool 'toolbelt'
