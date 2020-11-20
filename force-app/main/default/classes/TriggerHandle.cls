@@ -4,5 +4,4 @@ public class TriggerHandle{
     //suvskadjg
     //noaewg
     //sdagd
-    //sdsd
 }
