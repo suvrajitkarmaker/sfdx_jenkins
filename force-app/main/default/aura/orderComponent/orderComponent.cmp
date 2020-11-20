@@ -1,0 +1,81 @@
+<aura:component controller="paansshop">
+    <aura:attribute name="TagLine" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="customerName" type="String"/>
+    <aura:attribute name="customerPhone" type="String"/>
+    <aura:attribute name="totallPrice" type="Integer"/>
+    <aura:attribute name="totallProfit" type="Integer"/>
+    <aura:attribute name="recordList" type="Object"/>
+    <lightning:navigation aura:id="navigation"/>
+    <aura:method name="updateCart" action="{!c.updateCart}" access="public">
+        <aura:attribute name="orderRecord" type="Object"/>
+    </aura:method>
+    <aura:if isTrue="{!v.recordList.length > 0}">
+            <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+                <div class="slds-align_absolute-center slds-col slds-size_2-of-6">
+                    <p><b>Customer Name:</b></p>
+                </div>
+                <div class="slds-align_absolute-center slds-col slds-size_4-of-6">
+                    <ui:inputText label="" value="{!v.customerName}"/>
+                </div>
+            </div>
+            <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+                <div class="slds-align_absolute-center slds-col slds-size_2-of-6">
+                    <p><b>Customer Phone:</b></p>
+                </div>
+                <div class="slds-align_absolute-center slds-col slds-size_4-of-6">
+                    <ui:inputPhone label="" value="{!v.customerPhone}"/>
+                </div>
+            </div>
+            <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+                <div class="slds-align_absolute-center slds-col slds-size_2-of-6"><b>Product Name</b></div>
+                <div class="slds-align_absolute-center slds-col slds-size_1-of-6"><b>Price(Unit)</b></div>
+                <div class="slds-align_absolute-center slds-col slds-size_1-of-6"><b>Quantity</b></div>
+                <div class="slds-align_absolute-center slds-col slds-size_1-of-6"><b>Add Quantity</b></div>
+                <div class="slds-align_absolute-center slds-col slds-size_1-of-6"><b></b></div>
+            </div>
+                <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+                    <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+                        <div class="slds-align_absolute-center slds-col slds-size_2-of-6">
+                            {!item.Name}
+                        </div>
+                        <div class="slds-align_absolute-center slds-col slds-size_1-of-6">
+                            <lightning:formattedNumber label="Selling Price" value="{!item.SellingPrice__c}"
+                                            currencyCode="USD" />
+                        </div>
+                        <div class="slds-align_absolute-center slds-col slds-size_1-of-6">
+                            <ui:inputNumber label="" value="{!item.dummyQuantity__c}"/>
+                        </div>
+                        <div class="slds-align_absolute-center slds-col slds-size_1-of-6">
+                            <a href="JavaScript:void(0);" id="{!index}" 
+                            title="{!item.dummyQuantity__c}" onclick="{!c.quantityUpdate}">
+                                <lightning:button label="Add" variant="brand"/>
+                            </a>
+                        </div>
+                        <div class="slds-align_absolute-center slds-col slds-size_1-of-6 slds-p-left_x-left">
+                            <a href="JavaScript:void(0);" id="{!index}" onclick="{!c.deleteOrderItem}">
+                                <lightning:icon title="{!item.Id}"
+                                                iconName="utility:delete"
+                                                alternativeText="delete"
+                                                size="small"/>
+                            </a>
+                        </div>
+                    </div>
+                </aura:iteration>
+            <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+                <p><b>Totall price: &nbsp;&nbsp;&nbsp;</b></p>
+                <p><b>{!v.totallPrice}</b></p>
+            </div>
+            
+            <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+                <lightning:buttonGroup>
+                    <lightning:button label="Order Now" onclick="{!c.orderNow}" 
+                    variant="brand"/>
+                </lightning:buttonGroup>
+            </div>
+            <aura:set attribute="else">
+                <p class="slds-align_absolute-center" style="font-size: 25px;color: mediumvioletred;">No item added</p>
+                <img src="{!$Resource.emptyCart	}" class="slds-align_absolute-center" /><br />
+            </aura:set>
+        </aura:if>
+</aura:component>

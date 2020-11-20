@@ -1,0 +1,67 @@
+<aura:component controller="paansshop">
+    <aura:attribute name="totallPrice" type="Integer"/>
+    <aura:attribute name="totallProfit" type="Integer"/>
+    <aura:attribute name="numberOfDay" type="Integer" default="0"/>
+    <aura:attribute name="recordList" type="Object"/>
+    <aura:attribute name="today" type="Date" />
+    <lightning:overlayLibrary aura:id="overLayLib" />
+    <aura:handler name="init" value="{!this}" action="{!c.retrivAllOrder}" />
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small" style="height:60px; background-color: rgba(86, 236, 229, 0.918);">
+        <b style="font-size: 20px;" >Order Date: <ui:outputDate value="{!v.today}" /> </b>
+    </div>
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+        <div class="slds-align_absolute-center slds-col slds-size_1-of-5"><b>Order</b></div>
+        <div class="slds-align_absolute-center slds-col slds-size_1-of-5"><b>Customer Name</b></div>
+        <div class="slds-align_absolute-center slds-col slds-size_1-of-5"><b>Sell</b></div>
+        <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+            <lightning:button label="Previous Day" variant="success" onclick="{!c.previous}"/>
+        </div>
+        <aura:if isTrue="{!v.numberOfDay>0}">
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+                <lightning:button label="Next Day" variant="destructive" onclick="{!c.next}"/>
+            </div>
+            <aura:set attribute="else">
+                <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+                </div>
+            </aura:set>
+        </aura:if>
+       
+    </div>
+    <div class="slds-scrollable--y" style="height: 300px;">
+    <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+        <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+                    {!item.Name}
+            </div>
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+                {!item.customerName__c}
+            </div>
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+                {!item.Totall_Price__c}
+            </div>
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-5">
+                <a href="JavaScript:void(0);" id="{!item.Id}" onclick="{!c.orderDetail}">
+                    <lightning:button label="Order Detail" variant="brand"/>
+                </a>
+            </div>
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-5 slds-p-left_x-left">
+                <a href="JavaScript:void(0);" id="{!item.Id}" onclick="{!c.deleteOrder}">
+                    <lightning:icon 
+                                    iconName="utility:delete"
+                                    alternativeText="delete"
+                                    size="small"/>
+                </a>
+            </div>
+        </div>
+    </aura:iteration>
+    </div>
+    <div style="font-size: large;" class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+            <p><b>Totall price:&nbsp;</b></p>
+
+            <p><b>{!v.totallPrice}&nbsp;&nbsp;&nbsp;</b></p>
+            <p><b>&nbsp;&nbsp;&nbsp;Totall Profit:&nbsp;</b></p>
+
+            <p><b>{!v.totallProfit}</b></p>
+        
+    </div>
+</aura:component>

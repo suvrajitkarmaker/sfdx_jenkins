@@ -1,0 +1,37 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="paansshop">
+    <aura:attribute name="recordList" type="SObject" />
+    <lightning:overlayLibrary aura:id="overLayLib" />
+    <lightning:navigation aura:id="navigation"/>
+    <div class="slds-scrollable--y" style="height: 500px;">
+    <div>
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+                    <div class="slds-col slds-size_1-of-4 slds-p-around_small">
+                        <a title="{!item.Id}" onclick="{!c.openModal}">
+                            <lightning:card title="{!item.Name}" iconName="custom:custom7">
+                                <p class="slds-p-horizontal_samll">
+                                    <div class="slds-grid slds-gutters">
+                                        
+                                        <div style="margin-left: 3px;" class="slds-col slds-size_1-of-3">
+                                            <img style="border-radius: 10px;" src="{!item.ProductImg__c}" />
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            Quantity: {!item.Quantity__c} <br />
+                                            BuyingPrice(Unit): {!item.BuyingPrice__c}<br />
+                                            SellingPrice(Unit): {!item.SellingPrice__c}<br />
+                                        </div>
+                                    </div>
+                                </p>
+                                
+                                    
+                                
+                                
+                            </lightning:card>
+                        </a>
+                    </div>
+                
+            </aura:iteration>
+        </div>
+    </div>
+    </div>
+</aura:component>

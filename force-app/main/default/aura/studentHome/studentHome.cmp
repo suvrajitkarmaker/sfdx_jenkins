@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="student">
+    <aura:handler name="init" value="{!this}" action="{!c.retrivAllStudent}" />
+    <aura:attribute name="studentList" type="SObject" />
+    <div>
+        <c:displayStudent recordList="{!v.studentList}" forDelete="false"/>
+    </div>
+</aura:component>

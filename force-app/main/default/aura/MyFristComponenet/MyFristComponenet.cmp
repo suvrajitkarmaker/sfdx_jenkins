@@ -1,0 +1,12 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<div class="slds-p-around_x-small">
+    	<h1>I am in lighting component</h1>
+        <h1>Suvrajit karmaker</h1>
+        <p class="red">Software engneer</p>
+        <p>BJIT Limited</p>
+        <div>
+        	I am inside div tag
+        </div>
+    </div>
+ 
+</aura:component>

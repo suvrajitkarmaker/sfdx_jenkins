@@ -1,0 +1,5 @@
+<aura:component >
+    <c:ChildComp aura:id="childComp"/>
+    <lightning:button name="Invoke child action" label="Invoke child action"
+                      onclick="{!c.doClick}"/>
+</aura:component>

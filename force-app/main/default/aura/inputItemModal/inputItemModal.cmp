@@ -1,0 +1,27 @@
+<aura:component controller="paansshop">
+    <aura:attribute name="paanId" type="String" />
+    <aura:attribute name="update" type="boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="buyObj" type="PaanBuy__c"/>
+    <lightning:navigation aura:id="navigation"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div class="slds-p-around_small">
+        <lightning:input name="input1" label="Product Name" value="{!v.buyObj.Name}"/>
+        <lightning:input name="input2" label="Quantity" value="{!v.buyObj.Quantity__c}"/>
+        <lightning:input name="input3" label="BuyingPrice(Unit)" value="{!v.buyObj.BuyingPrice__c}"/>
+        <lightning:input name="input4" label="SellingPrice(Unit)" value="{!v.buyObj.SellingPrice__c}"/>
+        <lightning:input name="input5" label="Image" value="{!v.buyObj.ProductImg__c}"/>
+        <aura:if isTrue="{!v.update}">
+            <lightning:button label="Delete" name="{!v.paanId}" variant="brand"
+                                                onclick="{!c.deleteFromObj}"/>
+
+            <lightning:button label="Update" variant="brand"
+                            onclick="{!c.save}"/>
+
+            <aura:set attribute="else">
+                <lightning:button label="Save" variant="brand"
+                onclick="{!c.save}"/>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

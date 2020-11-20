@@ -1,0 +1,108 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" controller="DataTableAuraServices">
+     
+    <!--Declare Attributes-->
+    <aura:attribute name="accList" type="Account[]"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="isLastPage" type="Boolean" default="false"/>
+    <aura:attribute name="dataSize" type="Integer" default="0"/>
+    <!--Declare Handler-->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+     
+    <!--Component Start-->
+    <div class="slds-m-around--xxx-large">               
+         
+        <lightning:card>
+            <aura:set attribute="title">
+                Account
+            </aura:set>
+            <aura:set attribute="footer">
+                <div class="slds-align_absolute-center"> 
+                    <div class="slds-p-right_xx-small">
+                        <lightning:button label="Prev"
+                                          onclick="{!c.handlePrev}"
+                                          disabled="{! v.pageNumber == 1}"
+                                          variant="brand"
+                                          iconName="utility:back"
+                                          name="prev"/>
+                    </div>
+                    <span class="slds-badge slds-badge_lightest">
+                        Page {!v.pageNumber} | Showing records from {! ((v.pageNumber-1)*v.pageSize)+' to '+((v.pageNumber-1)*v.pageSize+v.dataSize)}
+                    </span>
+                    <div class="slds-p-left_xx-small">
+                        <lightning:button label="Next"
+                                          disabled="{!v.isLastPage}"
+                                          onclick="{!c.handleNext}"
+                                          variant="brand"
+                                          iconName="utility:forward"
+                                          iconPosition="right"
+                                          name="next"/>
+                    </div>
+                </div>  
+                 
+            </aura:set>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset slds-text-title_caps">
+                        <th  class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Name">
+                                Name
+                            </div>
+                        </th>
+                        <th  class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Account Number">
+                                Account Number
+                            </div>
+                        </th>
+                        <th class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Industry">
+                                Industry
+                            </div>
+                        </th>
+                        <th class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Phone">
+                                Phone
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Actions">Actions</div>
+                        </th>
+                    </tr>
+                </thead>
+                <aura:if isTrue="{!v.accList.length > 0}">
+                    <tbody>
+                        <aura:iteration items="{!v.accList}" var="acc">
+                            <tr class="slds-hint-parent">
+                                 
+                                <th data-label="Name" scope="row">
+                                    <div class="slds-truncate" title="{!acc.Name}">
+                                        {!acc.Name}
+                                    </div>
+                                </th>
+                                <td data-label="Account Number">
+                                    <div class="slds-truncate" title="{!acc.AccountNumber}">{!acc.AccountNumber}</div>
+                                </td>
+                                <td data-label="Industry">
+                                    <div class="slds-truncate" title="{!acc.Industry}">{!acc.Industry}</div>
+                                </td>
+                                <td data-label="Phone">
+                                    <div class="slds-truncate" title="{!acc.Phone}">{!acc.Phone}</div>
+                                </td>
+                                <td data-label="Action">
+                                    <lightning:buttonIcon name="{!acc.Id}" iconName="utility:delete" title="Delete" variant="bare" onclick="{!c.handleDeleteAccount}" alternativeText="Delete" />                                                                            
+                                </td>
+                                 
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </aura:if>
+            </table>
+            <aura:if isTrue="{!empty(v.accList)}">
+                <div class="slds-align_absolute-center">
+                    No records found
+                </div>
+            </aura:if>
+        </lightning:card>
+    </div>
+    <!--Component End-->
+</aura:component>

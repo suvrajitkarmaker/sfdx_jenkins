@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <ltng:require styles="{!$Resource.background}" />
+    <h1>Change standerd layout</h1>
+</aura:component>

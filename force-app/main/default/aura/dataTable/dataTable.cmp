@@ -1,0 +1,23 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="DataTableAuraServices">
+
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="Object"/>
+
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+
+
+    <!-- the container element determine the height of the datatable -->
+    <div style="height: 300px">
+        <lightning:datatable
+                aura:id="accountTable"
+                keyField="id"
+                data="{! v.data }"
+                columns="{! v.columns }"
+                hideCheckboxColumn="false"
+                onrowselection="{!c.doSelectRecord}"
+                onrowaction="{!c.handleRowAction}"
+                onsave="{!c.handleDraftValues}"/>
+    </div>
+</aura:component>

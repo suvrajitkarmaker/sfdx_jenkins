@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="paansshop">
+    
+        <lightning:button label="Add New Paan" variant="brand"
+                                                  onclick="{!c.addPaan}"/>
+    <lightning:overlayLibrary aura:id="overLayLib" />
+</aura:component>

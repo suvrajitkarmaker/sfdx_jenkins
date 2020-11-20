@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" controller="apiClass">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- <aura:attribute name="item" type="Map" default="{ name: 'Chuck'}" />
+    <h1>{!v.item.name}</h1> -->
+    
+</aura:component>

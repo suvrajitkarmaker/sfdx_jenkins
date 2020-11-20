@@ -1,0 +1,42 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="student">
+    <aura:attribute name="recordList" type="SObject" />
+    <aura:attribute name="forDelete" type="boolean" />
+    <aura:attribute name="forUpdate" type="boolean" />
+    <lightning:overlayLibrary aura:id="overLayLib" />
+    <lightning:navigation aura:id="navigation"/>
+    <div>
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+                <div class="slds-col slds-size_1-of-4 slds-p-around_small">
+                    <lightning:card title="{!item.Name}" iconName="custom:custom7">
+                        <p class="slds-p-horizontal_samll">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <img src="{!item.image__c}" />
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    ID: {!item.id__c} <br />
+                                    Name: {!item.Name}<br />
+                                    Phone: {!item.phone__c}<br />
+                                    Email: {!item.email__c}<br />
+                                </div>
+                            </div>
+                        </p>
+                        <aura:if isTrue="{!v.forDelete}">
+                            
+                                <lightning:button label="Delete" name="{!item.Id}" variant="brand"
+                                                  onclick="{!c.deleteFromObj}"/>
+                           
+                        </aura:if>
+                        <aura:if isTrue="{!v.forUpdate}">
+                            
+                                <lightning:button label="Update" name="{!item.Id}" variant="brand"
+                                                  onclick="{!c.updateFromObj}"/>
+                           
+                        </aura:if>
+                    </lightning:card>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+</aura:component>

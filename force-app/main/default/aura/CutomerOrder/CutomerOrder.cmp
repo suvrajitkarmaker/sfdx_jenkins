@@ -1,0 +1,26 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="paansshop">
+    <aura:handler name="srcEvent" event="c:SearchEvent" action="{!c.retrivAllPaan}" />
+    <aura:handler name="init" value="{!this}" action="{!c.retrivAllPaan}" />
+    <aura:handler name="addToCart" event="c:AddToCart" action="{!c.updateCart}" />
+    <aura:attribute name="paanList" type="SObject" />
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <span>
+                <div>
+                    <c:searchStudentBar />
+                </div>
+                <div>
+                    <c:paanListForOrder recordList="{!v.paanList}"/>
+                </div>
+            </span>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <span>
+                <div>
+                    <c:orderComponent aura:id="orderComp"/>
+                </div>
+            </span>
+        </div>
+    </div>
+    
+</aura:component>

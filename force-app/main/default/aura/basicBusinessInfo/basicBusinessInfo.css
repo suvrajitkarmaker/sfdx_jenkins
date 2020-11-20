@@ -1,0 +1,10 @@
+.THIS .slds-p-around_small.slds-box.slds-align_absolute-center.slds-col.slds-size_1-of-3 {
+    margin: 10px;
+}
+
+
+.THIS .slds-box.slds-align_absolute-center {
+    width: 240px;
+    background-color: deepskyblue;
+    border-radius: 30px;
+}

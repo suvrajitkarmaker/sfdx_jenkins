@@ -1,0 +1,28 @@
+<aura:component controller="CustomRendererAuraService" implements="flexipage:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+    <aura:attribute name="testAttr" type="String" />
+    <aura:attribute name="recordList" type="Object" />
+	<div class="slds-p-around_medium" >
+        Custom Renderer <br/> {!v.testAttr}
+    </div>
+    <div class="slds-p-around_medium">
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.recordList}" var="acc" indexVar="index">
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning:card footer="{!acc.Name}" title="{!acc.Name}">
+                        <aura:set attribute="actions">
+                            <lightning:button label="New" variant="brand"/>
+                        </aura:set>
+                        <p class="slds-p-horizontal_small">
+                            Account Name: {!acc.Name}<br/>
+                            Account Id : {!acc.Id}<br/>
+                            Account Industry : {!acc.Industry}
+                        </p>
+                    </lightning:card>
+                </div>
+            </aura:iteration>
+        </div>
+       
+    </div>
+</aura:component>

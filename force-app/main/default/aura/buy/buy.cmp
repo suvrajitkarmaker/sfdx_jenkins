@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="paansshop">
+    <aura:handler name="srcEvent" event="c:SearchEvent" action="{!c.retrivAllPaan}" />
+    <aura:handler name="init" value="{!this}" action="{!c.retrivAllPaan}" />
+    <aura:attribute name="paanList" type="SObject" />
+    <div>
+        <c:searchStudentBar />
+    </div>
+    <div>
+        <c:paanList recordList="{!v.paanList}" />
+    </div>
+</aura:component>

@@ -1,0 +1,6 @@
+<design:component label="Covid19 Page Template">
+    <flexipage:template>
+        <flexipage:region name="left" label="Left Region" defaultWidth="Large" />
+        <flexipage:region name="right" label="Right Region" defaultWidth="Large" />
+    </flexipage:template>
+</design:component>

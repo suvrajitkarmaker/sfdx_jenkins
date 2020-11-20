@@ -1,0 +1,27 @@
+<aura:component controller="paansshop">
+    <lightning:overlayLibrary aura:id="overLayLib" />
+    <aura:attribute name="recordList" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.retrivAllStockOut}" />
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small" style="height:60px; background-color: rgba(86, 236, 229, 0.918);">
+        <b style="font-size: 20px;">Stock Out List</b>
+    </div>
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+        <div class="slds-align_absolute-center slds-col slds-size_2-of-4"><b>Product Name</b></div>
+        <div class="slds-align_absolute-center slds-col slds-size_2-of-4"><b>Update Product</b></div>
+    </div>
+    <div class="slds-scrollable--y" style="height: 300px;">
+    <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+        <div class="slds-align_absolute-center slds-grid slds-wrap slds-p-around_small">
+            <div class="slds-align_absolute-center slds-col slds-size_2-of-4">
+                    {!item.Name}
+            </div>
+            <div class="slds-align_absolute-center slds-col slds-size_2-of-4">
+                <a href="JavaScript:void(0);" id="{!item.Id}" onclick="{!c.openModal}">
+                    <lightning:button label="Update" variant="brand"/>
+                </a>
+            </div>
+        </div>
+
+    </aura:iteration>
+    </div>
+</aura:component>

@@ -1,0 +1,39 @@
+<aura:component >
+    <aura:attribute name="recordList" type="Object"/>
+    <lightning:overlayLibrary aura:id="overLayLib" />
+    <aura:attribute name="beerId" type="String"/>
+
+    <aura:registerEvent name="addToCart" type="c:AddToCart"/>
+    <div>
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+                <div class="slds-col slds-size_1-of-4 slds-p-around_small">
+                    <lightning:card title="{!item.name__c}" footer="{!item.id__c}"
+                                    iconName="custom:custom7">
+                        <p class="slds-p-horizontal_samll">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <img src="{!item.image__c}"/>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    ID: {!item.id__c} <br/>
+                                    Name: {!item.name__c}<br/>
+                                    Alcohol %: {!item.alcohol__c}<br/>
+                                    Brewery Name: {!item.brewery_Name__c}<br/>
+                                </div>
+                            </div>
+                        </p>
+                        <aura:set attribute="actions">
+                            <lightning:button label="view Details" name="{!item.Id}" value="{!item.name__c}" variant="brnd"
+                                              onclick="{!c.showinfo}"/>
+                        </aura:set>
+                        <aura:set attribute="footer">
+                            <lightning:button label="Add to Cart" name="{!item.Id}" value="{!index}" variant="brnd"
+                                              onclick="{!c.addToCart}"/>
+                        </aura:set>
+                    </lightning:card>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,17 @@
+<aura:component controller="student">
+    <aura:attribute name="studentId" type="String" />
+    <aura:attribute name="insert" type="boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="studentObj" type="students__c"/>
+    <lightning:navigation aura:id="navigation"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div class="slds-p-around_small">
+        <lightning:input name="input1" label="Name" value="{!v.studentObj.Name}"/>
+        <lightning:input name="input2" label="Email" value="{!v.studentObj.email__c}"/>
+        <lightning:input name="input3" label="Id" value="{!v.studentObj.id__c}"/>
+        <lightning:input name="input4" label="Phone" value="{!v.studentObj.phone__c}"/>
+        <lightning:input name="input5" label="Image" value="{!v.studentObj.image__c}"/>
+        <lightning:button label="Save" variant="brand"
+                                                  onclick="{!c.save}"/>
+    </div>
+</aura:component>
