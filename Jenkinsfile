@@ -1,124 +1,49 @@
 #!groovy
-
+import groovy.json.JsonSlurperClassic
 node {
 
-	echo 'print java version'
-	testRun = command "java -version"
+    def BUILD_NUMBER=env.BUILD_NUMBER
+    def RUN_ARTIFACT_DIR="tests/${BUILD_NUMBER}"
+    def SFDC_USERNAME
 
+    def HUB_ORG=env.HUB_ORG_DH
+    def SFDC_HOST = env.SFDC_HOST_DH
+    def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
+    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
 
+    println 'KEY IS' 
+    println JWT_KEY_CRED_ID
+    println HUB_ORG
+    println SFDC_HOST
+    println CONNECTED_APP_CONSUMER_KEY
+    def toolbelt = tool 'toolbelt'
 
-	echo 'test print env variables'
-	echo sh(returnStdout: true, script: 'env')
-	//
-	echo "${BUILD_URL}/consoleText"
-	//
-	def current_build_branch = env.BRANCH_NAME
-	echo 'CURRENT BUILD BRANCH NAME'
-	echo current_build_branch
-	
+    stage('checkout source') {
+        // when running in multi-branch job, one must issue this command
+        checkout scm
+    }
 
-	def SF_AUTH_URL
-	if(current_build_branch == 'master') {
-		SF_AUTH_URL = env.SFDX_AUTH_URL
-	}
-	else if(current_build_branch == 'dev') {
-		SF_AUTH_URL = env.SFDX_AUTH_URL_dev
-	}
-	else if(current_build_branch == 'qa') {
-		SF_AUTH_URL = env.SFDX_AUTH_URL_qa
-	}
-	else if(current_build_branch == 'uat') {
-		SF_AUTH_URL = env.SFDX_AUTH_URL_uat
-	}
-	else { // PR the current branch will be teh name of the PR
+    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
+        stage('Deploye Code') {
+            if (isUnix()) {
+                rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+            }else{
+                 rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+            }
+            if (rc != 0) { error 'hub org authorization failed' }
 
-	}
-	echo SF_AUTH_URL
-
-
-
-	def DEPLOYDIR='/var/lib/jenkins/workspace/new_pipeline_master/force-app/main/default'
-	echo DEPLOYDIR
-	echo pwd
-	sh 'ls -ll /var/lib/jenkins/workspace/new_pipeline_master'
-	def wk1 = env.WORKSPACE
-	echo wk1
-
-	def TEST_LEVEL='RunLocalTests'
-	def SF_INSTANCE_URL=env.SF_INSTANCE_URL ?: "https://suvrajit-karmaker-dev-ed.my.salesforce.com/"
-	echo SF_INSTANCE_URL
-
-	def toolbelt = tool 'toolbelt'
-	echo toolbelt
-	// -------------------------------------------------------------------------
-	// Check out code from source control git
-	// -------------------------------------------------------------------------
-
-   	stage('checkout source') {
-		echo 'Pulling...' + env.BRANCH_NAME
-		checkout scm
-	}
-
-	echo "auth URL below ##############################"
-	echo SF_AUTH_URL
-
-	echo "env.BRANCH_NAME below ##############################"
-	echo env.BRANCH_NAME
-
-	writeFile file: 'authjenkinsci.txt', text: SF_AUTH_URL
-	sh 'ls -l authjenkinsci.txt'
-	sh 'cat authjenkinsci.txt'
-	
-	
-	rc = command "${toolbelt}/sfdx --help"
-	if (rc != 0) {
-		error 'SFDX CLI Jenkins tool initalize failed.'
-	}
-
-	
-
-	// auth
-	rc2 = command "${toolbelt}/sfdx force:auth:sfdxurl:store -f authjenkinsci.txt -a targetEnvironment"
-	if (rc2 != 0) {
-		error 'SFDX CLI Authorization to target env has failed.'
-	}
-	
-	// deploy full build  --dev-debug
-	rc4 = command "${toolbelt}/sfdx force:source:deploy -c --wait 10 --sourcepath ${DEPLOYDIR} --testlevel ${TEST_LEVEL} -u targetEnvironment"
-	if (rc4 != 0) {
-		error 'There was an issue deploying. Check ORG deployment status page for details'
-	}
-
-
-	// run tests
-	rc3 = command "${toolbelt}/sfdx force:apex:test:run -u targetEnvironment --wait 10"
-	if (rc3 != 0) {
-		error 'There was an issue running apex tests. Check ORG for details'
-	}
-	
-	// check for success deploy/build to this point - 
-	// launch Selenium scripts. >
-}
-
-def command(script) {
-    if (isUnix()) {
-        return sh(returnStatus: true, script: script);
-    } else {
-		return bat(returnStatus: true, script: script);
+			println rc
+			
+			// need to pull out assigned username
+			if (isUnix()) {
+				rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+			}else{
+			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+			}
+			  
+            printf rmsg
+            println('Hello from a Job DSL script!')
+            println(rmsg)
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
