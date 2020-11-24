@@ -1,4 +1,0 @@
-<aura:component implements="flexipage:availableForAllPageTypes" access="global">
-    <p>For check </p>
-    <p>Suvrajit test</p>
-</aura:component>

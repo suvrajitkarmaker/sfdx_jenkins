@@ -1,5 +1,0 @@
-<aura:component implements="flexipage:availableForAllPageTypes" controller="student">
-    <lightning:button label="Add Student Information" variant="brand"
-                                                  onclick="{!c.addStudent}"/>
-    <lightning:overlayLibrary aura:id="overLayLib" />
-</aura:component>

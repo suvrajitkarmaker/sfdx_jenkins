@@ -1,8 +1,0 @@
-<aura:component >
-    <aura:attribute name="mapVar" type="List"/>
-    
-    <aura:iteration items="{!v.mapVar}" var="map">
-        key: {!map.key} and value: {!map.value}<br/>
-    </aura:iteration>
-    <lightning:button label="CreateMap" onclick="{!c.doCreatMap}"/>
-</aura:component>

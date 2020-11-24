@@ -1,3 +1,0 @@
-<aura:component implements="flexipage:availableForAllPageTypes">
-    <p>Beer app create</p>
-</aura:component>

@@ -1,3 +1,0 @@
-<aura:component >
-    <aura:handler event="c:aeEvent" action="{!c.doInit}"/>
-</aura:component>
