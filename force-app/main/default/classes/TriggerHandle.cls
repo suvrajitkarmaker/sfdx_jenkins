@@ -1,15 +1,3 @@
 public class TriggerHandle{
-    //sadsdagsagsdg
-    //suvrajit karmaker
-    //suvskadjg
-    //noaewg
-    //sdagd
-    //sk
-    //dsag
-    //jenkins
-    //new update
-    //sdlakjglks
-    //xzgdsjhgjhgjadgsdagdfhdfhdf
-    //sakgskjaghkjsdgahjdsgdgs
-    //suvrajit
+    //test
 }
